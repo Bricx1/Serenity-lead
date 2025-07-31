@@ -10,12 +10,12 @@ import {
   Shield,
   Users,
   Clock,
-  Star,
+  
   ArrowRight,
   FileText,
-  Calendar,
+  
   AlertCircle,
-  Smile,
+  
 } from 'lucide-react';
 
 // React Router
@@ -730,11 +730,20 @@ const SerenityRehabLeadGenerator = () => {
                             <h2 className="text-3xl font-semibold mb-2">Serenity</h2>
                             <p className="text-sm mb-4">Copyright © 2025 Serenity. All rights reserved.</p>
                             <div className="flex gap-4 text-xl">
-                              <a href="#" aria-label="Instagram"><FaInstagram /></a>
-                              <a href="#" aria-label="Dribbble"><FaDribbble /></a>
-                              <a href="#" aria-label="Twitter"><FaTwitter /></a>
-                              <a href="#" aria-label="YouTube"><FaYoutube /></a>
-                            </div>
+  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+    <FaInstagram />
+  </a>
+  <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble">
+    <FaDribbble />
+  </a>
+  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+    <FaTwitter />
+  </a>
+  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+    <FaYoutube />
+  </a>
+</div>
+
                           </div>
                   
                           {/* Company Links */}

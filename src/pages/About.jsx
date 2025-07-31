@@ -1,4 +1,3 @@
-import React  from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import {
@@ -127,65 +126,77 @@ const About = () => {
           </Link>
         </div>
       </section>
+
       {/* Footer */}
-            <footer className="bg-[#4ecde6] text-white py-12 px-6">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-      
-              {/* Branding + Social */}
-              <div>
-                <h2 className="text-3xl font-semibold mb-2">Serenity</h2>
-                <p className="text-sm mb-4">Copyright © 2025 Serenity. All rights reserved.</p>
-                <div className="flex gap-4 text-xl">
-                  <a href="#" aria-label="Instagram"><FaInstagram /></a>
-                  <a href="#" aria-label="Dribbble"><FaDribbble /></a>
-                  <a href="#" aria-label="Twitter"><FaTwitter /></a>
-                  <a href="#" aria-label="YouTube"><FaYoutube /></a>
-                </div>
-              </div>
-      
-              {/* Company Links */}
-              <div>
-                <h4 className="font-semibold mb-3">Company</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="/about" className="hover:underline">About us</a></li>
-                  <li><a href="/blogs" className="hover:underline">Blog</a></li>
-                  <li><a href="/services" className="hover:underline">Services</a></li>
-                  <li><a href="/testimonials" className="hover:underline">Testimonials</a></li>
-                </ul>
-              </div>
-      
-              {/* Support Links */}
-              <div>
-                <h4 className="font-semibold mb-3">Support</h4>
-                <ul className="space-y-2 text-sm">
-                  <li><a href="#" className="hover:underline">Help center</a></li>
-                  <li><a href="#" className="hover:underline">Terms of service</a></li>
-                  <li><a href="#" className="hover:underline">Legal</a></li>
-                  <li><a href="#" className="hover:underline">Privacy policy</a></li>
-                  <li><a href="#" className="hover:underline">Status</a></li>
-                </ul>
-              </div>
-      
-              {/* Newsletter */}
-              <div>
-                <h4 className="font-semibold mb-3">Stay up to date</h4>
-                <form className="flex items-center bg-white rounded-md overflow-hidden">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="flex-1 px-3 py-2 text-gray-800 outline-none text-sm"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-[#1e3369] hover:bg-[#1a2c59] p-2 text-white"
-                  >
-                    <FaPaperPlane size={16} />
-                  </button>
-                </form>
-              </div>
-      
+      <footer className="bg-[#4ecde6] text-white py-12 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+
+          {/* Branding + Social */}
+          <div>
+            <h2 className="text-3xl font-semibold mb-2">Serenity</h2>
+            <p className="text-sm mb-4">Copyright © 2025 Serenity. All rights reserved.</p>
+            <div className="flex gap-4 text-xl">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <FaInstagram />
+              </a>
+              <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble">
+                <FaDribbble />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <FaTwitter />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <FaYoutube />
+              </a>
+              <a href="mailto:info@serenityrehab.com" aria-label="Send Email">
+                <FaPaperPlane />
+              </a>
             </div>
-          </footer>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h4 className="font-semibold mb-3">Company</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/about" className="hover:underline">About us</Link></li>
+              <li><Link to="/blogs" className="hover:underline">Blog</Link></li>
+              <li><Link to="/services" className="hover:underline">Services</Link></li>
+              <li><Link to="/testimonials" className="hover:underline">Testimonials</Link></li>
+            </ul>
+          </div>
+
+          {/* Support Links */}
+          <div>
+            <h4 className="font-semibold mb-3">Support</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/help" className="hover:underline">Help center</Link></li>
+              <li><Link to="/terms" className="hover:underline">Terms of service</Link></li>
+              <li><Link to="/legal" className="hover:underline">Legal</Link></li>
+              <li><Link to="/privacy" className="hover:underline">Privacy policy</Link></li>
+              <li><Link to="/status" className="hover:underline">Status</Link></li>
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="font-semibold mb-3">Stay up to date</h4>
+            <form className="flex items-center bg-white rounded-md overflow-hidden">
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="flex-1 px-3 py-2 text-gray-800 outline-none text-sm"
+              />
+              <button
+                type="submit"
+                className="bg-[#1e3369] hover:bg-[#1a2c59] p-2 text-white"
+              >
+                <FaPaperPlane size={16} />
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </footer>
     </div>
   );
 };

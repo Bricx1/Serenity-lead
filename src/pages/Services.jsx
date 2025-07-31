@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; // Only use React if you're using JSX
+import { useEffect, useState } from 'react'; // Only use React if you're using JSX
 
 // Lucide icons
 import {
@@ -25,35 +25,159 @@ import {
   FaPaperPlane,
 } from 'react-icons/fa';
 
+// Move data outside component to avoid dependency issues
+const services = [
+  {
+    title: 'Counseling',
+    icon: '👥',
+    description: 'Individual and group therapy to support recovery.',
+    features: ['Peer support groups', 'Substance abuse counseling', 'Crisis intervention'],
+    linkText: 'Learn More',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop'
+  },
+  {
+    title: 'Medication‑Assisted Treatment (MAT)',
+    icon: '💊',
+    description: 'FDA-approved medications like methadone combined with therapy.',
+    features: ['Medical supervision', 'Dose adjustments', 'Behavioral counseling'],
+    linkText: 'Learn More',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop'
+  },
+  {
+    title: 'Family Reunification',
+    icon: '👨‍👩‍👧‍👦',
+    description: 'Rebuild family relationships with structured therapeutic support.',
+    features: ['Family therapy sessions', 'Communication workshops', 'Parenting skills'],
+    linkText: 'Learn More',
+    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=300&fit=crop'
+  },
+  {
+    title: 'Aftercare & Peer Support',
+    icon: '🤝',
+    description: 'Ongoing support post-treatment including mentoring and relapse prevention.',
+    features: ['Peer support', 'Recovery education', 'Case coordination'],
+    linkText: 'Learn More',
+    image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&h=300&fit=crop'
+  }
+];
+
+const testimonials = [
+  {
+    name: "Sarah M.",
+    age: "34",
+    treatment: "MAT Program",
+    quote: "The staff at Serenity gave me hope when I had none. Their comprehensive approach helped me rebuild my life and reconnect with my children.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1494790108755-2616b612b789?w=80&h=80&fit=crop&crop=face"
+  },
+  {
+    name: "Michael R.",
+    age: "28",
+    treatment: "Counseling & Peer Support",
+    quote: "Two years clean thanks to this program. The peer support groups showed me I wasn't alone in this journey.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+  },
+  {
+    name: "Jennifer L.",
+    age: "41",
+    treatment: "Family Reunification",
+    quote: "Not only did they help me recover, but they helped repair the relationships that mattered most to me.",
+    rating: 5,
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face"
+  }
+];
+
+const galleryImages = [
+  {
+    url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=400&fit=crop",
+    caption: "Group therapy session"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=400&fit=crop",
+    caption: "Individual counseling"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=400&fit=crop",
+    caption: "Family therapy workshop"
+  },
+  {
+    url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+    caption: "Medical consultation"
+  }
+];
+
 const patientJourneys = [
   {
     id: 1,
-    title: 'Initial Assessment',
-    description: 'Patient meets counselor for evaluation.',
-    icon: '/icons/assessment.png',
-    milestones: ['Vitals check', 'Psych Eval', 'Nursing Intake']
+    name: 'Sarah M.',
+    age: 34,
+    phase: 'Recovery Phase 3',
+    daysClean: 127,
+    nextAppointment: 'Tomorrow 2:00 PM',
+    successRate: 85,
+    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b789?w=80&h=80&fit=crop&crop=face',
+    milestones: [
+      { task: 'Initial Assessment', date: '4 months ago', completed: true },
+      { task: 'Treatment Planning', date: '3 months ago', completed: true },
+      { task: 'Group Therapy Sessions', date: 'Ongoing', completed: true },
+      { task: 'Family Counseling', date: 'Next week', completed: false }
+    ]
   },
   {
     id: 2,
-    title: 'Treatment Planning',
-    description: 'Create a custom plan.',
-    icon: '/icons/plan.png',
-    milestones: ['Set Goals', 'Choose Treatment', 'Discuss Medications']
+    name: 'Michael R.',
+    age: 28,
+    phase: 'Recovery Phase 2',
+    daysClean: 89,
+    nextAppointment: 'Friday 10:00 AM',
+    successRate: 70,
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
+    milestones: [
+      { task: 'Initial Assessment', date: '3 months ago', completed: true },
+      { task: 'Detox Program', date: '2 months ago', completed: true },
+      { task: 'Individual Counseling', date: 'Ongoing', completed: true },
+      { task: 'Peer Support Groups', date: 'This week', completed: false }
+    ]
   },
   {
     id: 3,
-    title: 'Therapy Sessions',
-    description: 'Ongoing therapy work.',
-    icon: '/icons/therapy.png',
-    milestones: ['Weekly 1-on-1', 'Group Therapy', 'Peer Review']
+    name: 'Jennifer L.',
+    age: 41,
+    phase: 'Aftercare Support',
+    daysClean: 365,
+    nextAppointment: 'Monthly Check-in',
+    successRate: 95,
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face',
+    milestones: [
+      { task: 'Complete Treatment Program', date: '1 year ago', completed: true },
+      { task: 'Family Reunification', date: '8 months ago', completed: true },
+      { task: 'Job Placement Support', date: '6 months ago', completed: true },
+      { task: 'Ongoing Peer Mentoring', date: 'Ongoing', completed: true }
+    ]
   },
   {
     id: 4,
-    title: 'Ongoing Support',
-    description: 'Continued recovery support.',
-    icon: '/icons/support.png',
-    milestones: ['Peer Check-ins', 'Job Coaching', 'Community Programs']
+    name: 'David K.',
+    age: 35,
+    phase: 'Recovery Phase 1',
+    daysClean: 45,
+    nextAppointment: 'Monday 3:30 PM',
+    successRate: 55,
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face',
+    milestones: [
+      { task: 'Medical Detox', date: '6 weeks ago', completed: true },
+      { task: 'Stabilization', date: '1 month ago', completed: true },
+      { task: 'Counseling Sessions', date: 'Ongoing', completed: false },
+      { task: 'MAT Program', date: 'Next phase', completed: false }
+    ]
   }
+];
+
+const stats = [
+  { number: "2,500+", label: "Patients Helped", icon: Users },
+  { number: "15+", label: "Years Experience", icon: Clock },
+  { number: "95%", label: "Success Rate", icon: Award }
 ];
 
 const Services = () => {
@@ -62,7 +186,6 @@ const Services = () => {
   const [currentPatient, setCurrentPatient] = useState(0);
   const [, setAnimatedStats] = useState({ patients: 0, years: 0, success: 0 });
   const [, setProgressAnimation] = useState(0);
- 
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -115,21 +238,21 @@ const Services = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Auto-rotate testimonials
+  // Auto-rotate testimonials - Fixed dependency array
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, []); // Empty dependency array is fine since testimonials is now constant
 
-  // Auto-rotate gallery images
+  // Auto-rotate gallery images - Fixed dependency array  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentGalleryImage(prev => (prev + 1) % galleryImages.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, []); // Empty dependency array is fine since galleryImages is now constant
 
   // Auto-rotate patient stories
   useEffect(() => {
@@ -138,93 +261,6 @@ const Services = () => {
     }, 6000);
     return () => clearInterval(interval);
   }, []);
-
-  const services = [
-    {
-      title: 'Counseling',
-      icon: '👥',
-      description: 'Individual and group therapy to support recovery.',
-      features: ['Peer support groups', 'Substance abuse counseling', 'Crisis intervention'],
-      linkText: 'Learn More',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop'
-    },
-    {
-      title: 'Medication‑Assisted Treatment (MAT)',
-      icon: '💊',
-      description: 'FDA-approved medications like methadone combined with therapy.',
-      features: ['Medical supervision', 'Dose adjustments', 'Behavioral counseling'],
-      linkText: 'Learn More',
-      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop'
-    },
-    {
-      title: 'Family Reunification',
-      icon: '👨‍👩‍👧‍👦',
-      description: 'Rebuild family relationships with structured therapeutic support.',
-      features: ['Family therapy sessions', 'Communication workshops', 'Parenting skills'],
-      linkText: 'Learn More',
-      image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=300&fit=crop'
-    },
-    {
-      title: 'Aftercare & Peer Support',
-      icon: '🤝',
-      description: 'Ongoing support post-treatment including mentoring and relapse prevention.',
-      features: ['Peer support', 'Recovery education', 'Case coordination'],
-      linkText: 'Learn More',
-      image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&h=300&fit=crop'
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "Sarah M.",
-      age: "34",
-      treatment: "MAT Program",
-      quote: "The staff at Serenity gave me hope when I had none. Their comprehensive approach helped me rebuild my life and reconnect with my children.",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b789?w=80&h=80&fit=crop&crop=face"
-    },
-    {
-      name: "Michael R.",
-      age: "28",
-      treatment: "Counseling & Peer Support",
-      quote: "Two years clean thanks to this program. The peer support groups showed me I wasn't alone in this journey.",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
-    },
-    {
-      name: "Jennifer L.",
-      age: "41",
-      treatment: "Family Reunification",
-      quote: "Not only did they help me recover, but they helped repair the relationships that mattered most to me.",
-      rating: 5,
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face"
-    }
-  ];
-
-  const galleryImages = [
-    {
-      url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=400&fit=crop",
-      caption: "Group therapy session"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&h=400&fit=crop",
-      caption: "Individual counseling"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=400&fit=crop",
-      caption: "Family therapy workshop"
-    },
-    {
-      url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
-      caption: "Medical consultation"
-    }
-  ];
-
-  const stats = [
-    { number: "2,500+", label: "Patients Helped", icon: Users },
-    { number: "15+", label: "Years Experience", icon: Clock },
-    { number: "95%", label: "Success Rate", icon: Award }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-blue-50">
@@ -306,16 +342,16 @@ const Services = () => {
               <div key={index} className="flex flex-col items-center transform hover:scale-105 transition-transform duration-300">
                 <stat.icon className="h-12 w-12 mb-4 text-teal-200 animate-pulse" />
                 <div className="text-4xl font-bold mb-2">
-                  {stat.number.toLocaleString()}{stat.suffix}
+                  {stat.number}
                 </div>
                 <div className="text-teal-200">{stat.label}</div>
                 <div className="w-full bg-teal-700 rounded-full h-2 mt-3">
                   <div 
                     className="bg-white h-2 rounded-full transition-all duration-2000 ease-out"
                     style={{ 
-                      width: index === 0 ? `${(stat.number/2500)*100}%` : 
-                             index === 1 ? `${(stat.number/15)*100}%` : 
-                             `${stat.number}%` 
+                      width: index === 0 ? '100%' : 
+                             index === 1 ? '100%' : 
+                             '95%' 
                     }}
                   />
                 </div>
@@ -487,6 +523,8 @@ const Services = () => {
           </div>
         </div>
       </div>
+
+      {/* Patient Success Stories */}
       <div className="bg-white py-16">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Patient Success Stories</h2>
@@ -583,65 +621,77 @@ const Services = () => {
 </div>
 
       {/* Footer */}
-                        <footer className="bg-[#4ecde6] text-white py-12 px-6">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-                  
-                          {/* Branding + Social */}
-                          <div>
-                            <h2 className="text-3xl font-semibold mb-2">Serenity</h2>
-                            <p className="text-sm mb-4">Copyright © 2025 Serenity. All rights reserved.</p>
-                            <div className="flex gap-4 text-xl">
-                              <a href="#" aria-label="Instagram"><FaInstagram /></a>
-                              <a href="#" aria-label="Dribbble"><FaDribbble /></a>
-                              <a href="#" aria-label="Twitter"><FaTwitter /></a>
-                              <a href="#" aria-label="YouTube"><FaYoutube /></a>
-                            </div>
-                          </div>
-                  
-                          {/* Company Links */}
-                          <div>
-                            <h4 className="font-semibold mb-3">Company</h4>
-                            <ul className="space-y-2 text-sm">
-                              <li><a href="/about" className="hover:underline">About us</a></li>
-                              <li><a href="/blogs" className="hover:underline">Blog</a></li>
-                              <li><a href="/services" className="hover:underline">Services</a></li>
-                              <li><a href="/testimonials" className="hover:underline">Testimonials</a></li>
-                            </ul>
-                          </div>
-                  
-                          {/* Support Links */}
-                          <div>
-                            <h4 className="font-semibold mb-3">Support</h4>
-                            <ul className="space-y-2 text-sm">
-                              
+      <footer className="bg-[#4ecde6] text-white py-12 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+
+        {/* Branding + Social */}
+        <div>
+          <h2 className="text-3xl font-semibold mb-2">Serenity</h2>
+          <p className="text-sm mb-4">Copyright © 2025 Serenity. All rights reserved.</p>
+         <div className="flex gap-4 text-xl">
+<a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+<FaInstagram />
+</a>
+<a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" aria-label="Dribbble">
+<FaDribbble />
+</a>
+<a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+<FaTwitter />
+</a>
+<a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+<FaYoutube />
+</a>
+<a href="mailto:info@serenityrehab.com" aria-label="Send Email">
+<FaPaperPlane />
+</a>
+</div>
+
+        </div>
+
+        {/* Company Links */}
+        <div>
+          <h4 className="font-semibold mb-3">Company</h4>
+          <ul className="space-y-2 text-sm">
+            <li><a href="/about" className="hover:underline">About us</a></li>
+            <li><a href="/blogs" className="hover:underline">Blog</a></li>
+            <li><a href="/services" className="hover:underline">Services</a></li>
+            <li><a href="/testimonials" className="hover:underline">Testimonials</a></li>
+          </ul>
+        </div>
+
+        {/* Support Links */}
+        <div>
+          <h4 className="font-semibold mb-3">Support</h4>
+          <ul className="space-y-2 text-sm">
+            
 <li><Link to="/serenity-support" className="hover:underline">Help center</Link></li>
 <li><Link to="/serenity-support?section=terms" className="hover:underline">Terms</Link></li>
 <li><Link to="/serenity-support?section=privacy" className="hover:underline">Privacy</Link></li>
 <li><Link to="/serenity-support?section=legal" className="hover:underline">Legal</Link></li>
 <li><Link to="/serenity-support?section=status" className="hover:underline">Status</Link></li>
-                            </ul>
-                          </div>
-                  
-                          {/* Newsletter */}
-                          <div>
-                            <h4 className="font-semibold mb-3">Stay up to date</h4>
-                            <form className="flex items-center bg-white rounded-md overflow-hidden">
-                              <input
-                                type="email"
-                                placeholder="Your email address"
-                                className="flex-1 px-3 py-2 text-gray-800 outline-none text-sm"
-                              />
-                              <button
-                                type="submit"
-                                className="bg-[#1e3369] hover:bg-[#1a2c59] p-2 text-white"
-                              >
-                                <FaPaperPlane size={16} />
-                              </button>
-                            </form>
-                          </div>
-                  
-                        </div>
-                      </footer>
+          </ul>
+        </div>
+
+        {/* Newsletter */}
+        <div>
+          <h4 className="font-semibold mb-3">Stay up to date</h4>
+          <form className="flex items-center bg-white rounded-md overflow-hidden">
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="flex-1 px-3 py-2 text-gray-800 outline-none text-sm"
+            />
+            <button
+              type="submit"
+              className="bg-[#1e3369] hover:bg-[#1a2c59] p-2 text-white"
+            >
+              <FaPaperPlane size={16} />
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </footer>
     </div>
   );
 };
