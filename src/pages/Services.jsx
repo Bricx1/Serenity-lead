@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'; // Only use React if you're using JSX
+import { useEffect, useState } from 'react';
 
 // Lucide icons
 import {
@@ -24,6 +24,147 @@ import {
   FaYoutube,
   FaPaperPlane,
 } from 'react-icons/fa';
+
+// Inline RecoveryQuest Components
+const ScenarioCard = ({ scenario, onChoice }) => {
+  return (
+    <div className="text-center">
+      <p className="text-lg text-gray-800 mb-6 leading-relaxed">
+        {scenario.text}
+      </p>
+      <div className="space-y-3">
+        {scenario.choices.map((choice, index) => (
+          <button
+            key={index}
+            onClick={() => onChoice(choice)}
+            className="w-full p-4 bg-white border-2 border-teal-200 rounded-lg hover:border-teal-400 hover:bg-teal-50 transition-all duration-200 text-left"
+          >
+            {choice.text}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ReflectionModal = ({ onClose }) => {
+  const [reflection, setReflection] = useState('');
+
+  const handleSubmit = () => {
+    console.log('User reflection:', reflection);
+    onClose();
+  };
+
+  return (
+    <div className="text-center">
+      <h3 className="text-xl font-semibold text-teal-800 mb-4">
+        Take a moment to reflect
+      </h3>
+      <p className="text-gray-600 mb-6">
+        How did that choice make you feel? What did you learn?
+      </p>
+      
+      <textarea
+        value={reflection}
+        onChange={(e) => setReflection(e.target.value)}
+        placeholder="Write your thoughts here..."
+        className="w-full p-4 border border-gray-300 rounded-lg mb-6 h-32 resize-none focus:border-teal-500 focus:outline-none"
+      />
+      
+      <div className="flex gap-4 justify-center">
+        <button
+          onClick={handleSubmit}
+          className="bg-teal-600 text-white px-6 py-2 rounded hover:bg-teal-700 transition"
+        >
+          Continue Journey
+        </button>
+        <button
+          onClick={onClose}
+          className="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400 transition"
+        >
+          Skip Reflection
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const RecoveryQuest = () => {
+  const scenarios = [
+    {
+      id: "party-invite",
+      text: "You get invited to a party where alcohol may be present. What do you do?",
+      choices: [
+        { text: "Decline and suggest coffee instead", next: "coffee-success", score: +1 },
+        { text: "Say maybe and see how you feel", next: "temptation", score: 0 },
+        { text: "Agree to go", next: "relapse", score: -1 },
+      ],
+    },
+    {
+      id: "coffee-success",
+      text: "Your friend agrees to coffee. You feel proud of your decision.",
+      reflection: true,
+    },
+    {
+      id: "temptation",
+      text: "You went but left early, feeling conflicted.",
+      reflection: true,
+    },
+    {
+      id: "relapse",
+      text: "You gave in. It's okay — time to reset and try again.",
+      restart: true,
+    }
+  ];
+
+  const [currentId, setCurrentId] = useState("party-invite");
+  const [showReflection, setShowReflection] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const scenario = scenarios.find((s) => s.id === currentId);
+
+  const handleChoice = (choice) => {
+    setScore(prev => prev + (choice.score || 0));
+    const nextScenario = scenarios.find((s) => s.id === choice.next);
+
+    if (nextScenario?.reflection) {
+      setShowReflection(true);
+    }
+
+    setCurrentId(choice.next);
+  };
+
+  const handleReflectionClose = () => {
+    setShowReflection(false);
+    setCurrentId("party-invite");
+    setScore(0);
+  };
+
+  if (!scenario) return <p className="text-center">Loading...</p>;
+
+  return (
+    <div className="min-h-[400px] bg-gradient-to-br from-white to-blue-50 rounded-lg p-6 shadow-md">
+      <h2 className="text-2xl font-bold text-teal-800 mb-6 text-center">Recovery Quest</h2>
+      <p className="text-center text-sm text-gray-600 mb-2">Your Score: {score}</p>
+
+      {scenario.reflection ? (
+        <ReflectionModal onClose={handleReflectionClose} />
+      ) : scenario.restart ? (
+        <div className="text-center">
+          <p className="text-lg text-gray-800 mb-6">{scenario.text}</p>
+          <button
+            onClick={handleReflectionClose}
+            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+          >
+            Restart Quest
+          </button>
+        </div>
+      ) : (
+        <ScenarioCard scenario={scenario} onChoice={handleChoice} />
+      )}
+    </div>
+  );
+};
 
 // Move data outside component to avoid dependency issues
 const services = [
@@ -618,6 +759,17 @@ const Services = () => {
       </a>
     </div>
   </div>
+</div>
+
+{/* Recovery Quest Game Section */}
+<div className="bg-gradient-to-br from-blue-100 to-white py-16">
+  <div className="max-w-5xl mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center text-teal-800 mb-8">
+      🎮 Recovery Quest: Make Empowered Decisions
+    </h2>
+    <RecoveryQuest />
+  </div>
+  
 </div>
 
       {/* Footer */}
