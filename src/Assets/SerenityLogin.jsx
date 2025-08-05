@@ -13,7 +13,7 @@ export default function SerenityLogin() {
     patient: {
       email: 'patient@serenity.com',
       password: 'patient123',
-      redirect: '/patient-report'
+      redirect: '/serenity-connect'
 
     },
     doctor: {
