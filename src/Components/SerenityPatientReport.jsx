@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Search, User, Calendar, FileText, Camera, Stethoscope, Settings, BarChart3, Users, HelpCircle, Menu, Bell, UserCircle, ChevronLeft, Play, X, Check } from 'lucide-react';
+import { Search, User, Calendar, FileText, Camera, Stethoscope, Settings, BarChart3, Users, HelpCircle, Menu, Bell, UserCircle, ChevronLeft, Play, X, Check, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 const SerenityPatientReport = () => {
   const [activeSection, setActiveSection] = useState('report');
   const [showSubmissions, setShowSubmissions] = useState(false);
+  const navigate = useNavigate();
 
   const submissionHistory = [
     {
@@ -162,102 +165,47 @@ const SerenityPatientReport = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <div className="w-64 bg-teal-500 text-white flex flex-col">
-        {/* User Profile */}
-        <div className="p-6 border-b border-teal-400">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-teal-400 rounded-full flex items-center justify-center">
-              <User className="w-6 h-6" />
-            </div>
-            <div>
-              <h2 className="font-semibold">John D</h2>
-            </div>
-          </div>
-        </div>
+     
 
-        {/* Menu Section */}
-        <div className="flex-1 py-6">
-          <div className="px-6 mb-2">
-            <p className="text-xs font-semibold text-teal-200 uppercase tracking-wider">MENU</p>
-          </div>
-          
-          <nav className="space-y-1 px-3">
-            {menuItems.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => setActiveSection(item.key)}
-                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                  item.active || activeSection === item.key
-                    ? 'bg-teal-400 text-white'
-                    : 'text-teal-100 hover:bg-teal-400 hover:text-white'
-                }`}
-              >
-                <item.icon className="w-5 h-5" />
-                <span className="font-medium">{item.label}</span>
-              </button>
-            ))}
-          </nav>
-
-          {/* Others Section */}
-          <div className="px-6 mt-8 mb-2">
-            <p className="text-xs font-semibold text-teal-200 uppercase tracking-wider">OTHERS</p>
-          </div>
-          
-          <nav className="space-y-1 px-3">
-            {othersItems.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => setActiveSection(item.key)}
-                className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                  activeSection === item.key
-                    ? 'bg-teal-400 text-white'
-                    : 'text-teal-100 hover:bg-teal-400 hover:text-white'
-                }`}
-              >
-                <item.icon className="w-5 h-5" />
-                <span className="font-medium">{item.label}</span>
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Footer */}
-        <div className="p-6 border-t border-teal-400">
-          <div className="text-xs text-teal-200">
-            <p className="font-semibold">Serenity</p>
-            <p>A place that we all want</p>
-            <p className="mt-1">All rights reserved</p>
-          </div>
-        </div>
-      </div>
+      
+      
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-400 hover:text-gray-600">
-                <Bell className="w-5 h-5" />
-              </button>
-              <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100">
-                <UserCircle className="w-8 h-8 text-teal-500" />
-              </button>
-            </div>
-          </div>
-        </header>
+  {/* Back Arrow at Top Left */}
+  <div className="mb-4">
+    <button
+      onClick={() => navigate('/serenity-connect')}
+      className="p-2 rounded-full hover:bg-gray-100"
+    >
+      <ArrowLeft className="w-5 h-5 text-gray-600" />
+    </button>
+  </div>
+
+  {/* Search and User */}
+  <div className="flex items-center justify-between">
+    <div className="relative">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+      <input
+        type="text"
+        placeholder="Search"
+        className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+      />
+    </div>
+
+    <div className="flex items-center space-x-4">
+      <button className="p-2 text-gray-400 hover:text-gray-600">
+        <Bell className="w-5 h-5" />
+      </button>
+      <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100">
+        <UserCircle className="w-8 h-8 text-teal-500" />
+      </button>
+    </div>
+  </div>
+</header>
+
 
         {/* Page Content */}
         <main className="flex-1 p-6">
