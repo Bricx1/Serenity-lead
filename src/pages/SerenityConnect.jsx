@@ -24,7 +24,7 @@ import {
   Gamepad
 } from 'lucide-react';
 import { useNavigate  } from 'react-router-dom';
-import Personal from './Personal';
+
 
 const SerenityConnect = () => {
   const [activeView, setActiveView] = useState('home');
@@ -172,6 +172,14 @@ const navigate = useNavigate();
   <Gamepad className="w-4 h-4" />
   <span className="text-sm">Patient Interactive Games</span>
 </button>
+<button 
+  onClick={() => navigate('/submission-history')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <FileText className="w-4 h-4" />
+  <span className="text-sm">Submission History</span>
+</button>
+
 
           <button 
             onClick={() => setActiveView('doctors')}
@@ -247,7 +255,7 @@ const navigate = useNavigate();
           Take Home
         </button>
         <button 
-          onClick={() => setActiveView('reports')}
+          onClick={() => navigate('/patient-report')}
           className="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors"
         >
           Patient Report

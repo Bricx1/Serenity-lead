@@ -14,6 +14,7 @@ import TakeHome from './pages/TakeHome';
 import Personal from './pages/Personal';
 import SerenityPatientReport from './Components/SerenityPatientReport';
 import SerenityGames from './Components/SerenityGames';
+import PatientSubmissionHistory from './pages/PatientSubmissionHistory';
 function App() {
   return (
     <Router>
@@ -31,6 +32,7 @@ function App() {
         <Route path="/Personal" element={<Personal />} />
         <Route path="/patient-report" element={<SerenityPatientReport />} />
         <Route path="/serenity-games" element={<SerenityGames/>} />
+         <Route path="/submission-history" element={<PatientSubmissionHistory />} />
         
         
 
