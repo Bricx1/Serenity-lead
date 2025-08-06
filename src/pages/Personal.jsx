@@ -50,7 +50,9 @@ const Personal = () => {
       <div className="bg-gradient-to-br from-cyan-500 to-teal-500 p-6 text-white">
         <div className="flex items-center mb-4">
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mr-4">
-            <img src="/api/placeholder/64/64" alt="Profile" className="w-14 h-14 rounded-full object-cover" />
+            <div className="w-14 h-14 bg-gray-300 rounded-full flex items-center justify-center">
+              <User className="w-8 h-8 text-gray-600" />
+            </div>
           </div>
           <div>
             <h2 className="text-lg font-semibold">James Anderson</h2>
