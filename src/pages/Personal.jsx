@@ -23,7 +23,6 @@ import {
   ChevronUp,
   Settings,
   LogOut,
-  
   Home
 } from 'lucide-react';
 
