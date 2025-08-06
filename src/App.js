@@ -11,6 +11,9 @@ import SerenitySupport from './pages/SerenitySupport';
 import SerenityLogin from './Assets/SerenityLogin';
 import SerenityConnect from './pages/SerenityConnect';
 import TakeHome from './pages/TakeHome';
+import Personal from './pages/Personal';
+import SerenityPatientReport from './Components/SerenityPatientReport';
+import SerenityGames from './Components/SerenityGames';
 function App() {
   return (
     <Router>
@@ -25,6 +28,11 @@ function App() {
         <Route path="/serenity-support" element={<SerenitySupport />} />
         <Route path="/serenity-connect" element={<SerenityConnect />} />
         <Route path="/take-home" element={<TakeHome />} />
+        <Route path="/Personal" element={<Personal />} />
+        <Route path="/patient-report" element={<SerenityPatientReport />} />
+        <Route path="/serenity-games" element={<SerenityGames/>} />
+        
+        
 
         {/* Fallback for unknown routes */}
         <Route path="*/" element={<SerenityRehabLeadGenerator />} />

@@ -20,9 +20,12 @@ import {
   Clock,
   MapPin,
   Star,
-  Circle
+  Circle,
+  Gamepad
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
+import Personal from './Personal';
+
 const SerenityConnect = () => {
   const [activeView, setActiveView] = useState('home');
   const [selectedChat, setSelectedChat] = useState(null);
@@ -148,14 +151,13 @@ const navigate = useNavigate();
             <span className="text-sm">Dashboard</span>
           </button>
           <button 
-            onClick={() => setActiveView('reports')}
-            className={`w-full flex items-center space-x-3 p-2 rounded text-left transition-colors ${
-              activeView === 'reports' ? 'bg-teal-500' : 'hover:bg-teal-500'
-            }`}
-          >
-            <FileText className="w-4 h-4" />
-            <span className="text-sm">Patient Report</span>
-          </button>
+  onClick={() => navigate('/patient-report')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <FileText className="w-4 h-4" />
+  <span className="text-sm">Patient Report</span>
+</button>
+
           <button 
   onClick={() => navigate('/take-home')}
   className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
@@ -163,6 +165,14 @@ const navigate = useNavigate();
   <Home className="w-4 h-4" />
   <span className="text-sm">Take Home</span>
 </button>
+ <button 
+  onClick={() => navigate('/serenity-games')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <Gamepad className="w-4 h-4" />
+  <span className="text-sm">Patient Interactive Games</span>
+</button>
+
           <button 
             onClick={() => setActiveView('doctors')}
             className={`w-full flex items-center space-x-3 p-2 rounded text-left transition-colors ${
@@ -185,10 +195,13 @@ const navigate = useNavigate();
             <MessageCircle className="w-4 h-4" />
             <span className="text-sm">Messages</span>
           </button>
-          <button className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors">
-            <Settings className="w-4 h-4" />
-            <span className="text-sm">Settings</span>
-          </button>
+          <button 
+  onClick={() => navigate('/personal')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <Settings className="w-4 h-4" />
+  <span className="text-sm">Settings</span>
+</button>
         </nav>
 
         <p className="text-xs text-teal-100 mt-8 mb-4">REQUESTS</p>
@@ -228,7 +241,7 @@ const navigate = useNavigate();
 
       <div className="flex space-x-4 mb-8">
         <button 
-          onClick={() => setActiveView('home')}
+          onClick={() => navigate('/take-home')}
           className="bg-teal-400 text-white px-6 py-3 rounded-full font-medium hover:bg-teal-500 transition-colors"
         >
           Take Home
