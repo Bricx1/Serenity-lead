@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   MessageCircle, 
@@ -21,15 +21,10 @@ import {
   MapPin,
   Star,
   Circle,
-  Gamepad,
-  X,
-  Check,
-  AlertCircle,
-  UserCheck,
-  Stethoscope,
-  TestTube,
-  PillBottle
+  Gamepad
 } from 'lucide-react';
+import { useNavigate  } from 'react-router-dom';
+
 
 const SerenityConnect = () => {
   const [activeView, setActiveView] = useState('home');
@@ -45,91 +40,25 @@ const SerenityConnect = () => {
       { id: 6, sender: 'doctor', text: 'Audio Message', time: '00:16', isAudio: true, doctorName: 'Dr. Maria Gonzalez' }
     ]
   });
-
   const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      type: 'lab_results',
-      sender: 'Dr. Olivia Smith',
-      avatar: '👩‍⚕️',
-      title: 'Lab Results Available',
-      message: 'Your blood work results from July 5th are ready for review. All values appear normal.',
-      time: '2 hours ago',
-      isRead: false,
-      priority: 'high',
-      actionRequired: true,
-      icon: <TestTube className="w-4 h-4" />
-    },
-    {
-      id: 2,
-      type: 'medication',
-      sender: 'Nurse Emily',
-      avatar: '👩‍⚕️',
-      title: 'Medication Reminder',
-      message: 'Please remember to take your evening medication and log your vitals in the app.',
-      time: '4 hours ago',
-      isRead: false,
-      priority: 'medium',
-      actionRequired: true,
-      icon: <PillBottle className="w-4 h-4" />
-    },
-    {
-      id: 3,
-      type: 'appointment',
-      sender: 'Dr. Mark Allen',
-      avatar: '👨‍⚕️',
-      title: 'Appointment Confirmed',
-      message: 'Your follow-up appointment for July 10th at 2:00 PM has been confirmed.',
-      time: '6 hours ago',
-      isRead: false,
-      priority: 'medium',
-      actionRequired: false,
-      icon: <Calendar className="w-4 h-4" />
-    },
-    {
-      id: 4,
-      type: 'vitals',
-      sender: 'Dr. Maria Gonzalez',
-      avatar: '👩‍⚕️',
-      title: 'Vitals Update Request',
-      message: 'Could you please update your blood pressure readings from this morning?',
-      time: '8 hours ago',
-      isRead: true,
-      priority: 'low',
-      actionRequired: true,
-      icon: <Stethoscope className="w-4 h-4" />
-    },
-    {
-      id: 5,
-      type: 'message',
-      sender: 'Nurse Emily',
-      avatar: '👩‍⚕️',
-      title: 'New Message',
-      message: 'Great job on maintaining your exercise routine! Keep up the excellent work.',
-      time: '1 day ago',
-      isRead: true,
-      priority: 'low',
-      actionRequired: false,
-      icon: <MessageCircle className="w-4 h-4" />
-    }
-  ]);
+  {
+    id: 1,
+    sender: 'Dr. Olivia Smith',
+    message: 'Your lab results are ready for review.',
+    time: '10:00 AM',
+    isRead: false
+  },
+  {
+    id: 2,
+    sender: 'Nurse Emily',
+    message: 'Please remember to log your vitals today.',
+    time: '8:30 AM',
+    isRead: false
+  }
+]);
 
-  const [showNotifications, setShowNotifications] = useState(false);
-  const notificationRef = useRef(null);
+const [showNotifications, setShowNotifications] = useState(false);
 
-  // Close notifications when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setShowNotifications(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const [doctors] = useState([
     { 
@@ -179,161 +108,6 @@ const SerenityConnect = () => {
     }
   ]);
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
-
-  // Navigation handler for buttons
-  const handleNavigation = (page) => {
-    console.log(`Navigating to: ${page}`);
-    // In a real app, this would handle navigation
-    // For this demo, we'll just show an alert
-    alert(`Would navigate to: ${page}`);
-  };
-
-  const markAsRead = (notificationId) => {
-    setNotifications(prev => prev.map(notif => 
-      notif.id === notificationId ? { ...notif, isRead: true } : notif
-    ));
-  };
-
-  const markAllAsRead = () => {
-    setNotifications(prev => prev.map(notif => ({ ...notif, isRead: true })));
-  };
-
-  const deleteNotification = (notificationId) => {
-    setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
-  };
-
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case 'high': return 'border-red-200 bg-red-50';
-      case 'medium': return 'border-yellow-200 bg-yellow-50';
-      case 'low': return 'border-gray-200 bg-gray-50';
-      default: return 'border-gray-200 bg-gray-50';
-    }
-  };
-
-  const getPriorityDot = (priority) => {
-    switch (priority) {
-      case 'high': return 'bg-red-500';
-      case 'medium': return 'bg-yellow-500';
-      case 'low': return 'bg-green-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
-  const NotificationPanel = () => (
-    <div 
-      ref={notificationRef}
-      className="absolute top-full right-0 mt-2 w-96 bg-white rounded-lg shadow-lg border border-gray-200 z-50 max-h-96 overflow-hidden"
-    >
-      {/* Header */}
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-        <h3 className="font-bold text-gray-800">Notifications</h3>
-        <div className="flex items-center space-x-2">
-          <button 
-            onClick={markAllAsRead}
-            className="text-sm text-teal-600 hover:text-teal-700"
-          >
-            Mark all as read
-          </button>
-          <button 
-            onClick={() => setShowNotifications(false)}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Notifications List */}
-      <div className="max-h-80 overflow-y-auto">
-        {notifications.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">
-            <Bell className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-            <p>No notifications yet</p>
-          </div>
-        ) : (
-          notifications.map((notification) => (
-            <div
-              key={notification.id}
-              className={`p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors ${
-                !notification.isRead ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
-              }`}
-            >
-              <div className="flex items-start space-x-3">
-                {/* Avatar */}
-                <div className="relative flex-shrink-0">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-lg">
-                    {notification.avatar}
-                  </div>
-                  {/* Priority dot */}
-                  <div className={`absolute -top-1 -right-1 w-3 h-3 ${getPriorityDot(notification.priority)} rounded-full border-2 border-white`}></div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between mb-1">
-                    <div className="flex items-center space-x-2">
-                      {notification.icon}
-                      <p className="font-medium text-gray-800 text-sm truncate">
-                        {notification.title}
-                      </p>
-                      {notification.actionRequired && (
-                        <AlertCircle className="w-3 h-3 text-orange-500 flex-shrink-0" />
-                      )}
-                    </div>
-                    <button
-                      onClick={() => deleteNotification(notification.id)}
-                      className="text-gray-400 hover:text-gray-600 ml-2"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                  
-                  <p className="text-xs text-gray-600 mb-1">
-                    <strong>{notification.sender}</strong>
-                  </p>
-                  
-                  <p className="text-sm text-gray-700 mb-2 leading-4">
-                    {notification.message}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">{notification.time}</span>
-                    <div className="flex items-center space-x-2">
-                      {notification.actionRequired && (
-                        <button className="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded-full hover:bg-teal-200 transition-colors">
-                          Take Action
-                        </button>
-                      )}
-                      {!notification.isRead && (
-                        <button
-                          onClick={() => markAsRead(notification.id)}
-                          className="text-xs text-teal-600 hover:text-teal-700"
-                        >
-                          Mark as read
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* Footer */}
-      {notifications.length > 0 && (
-        <div className="p-3 border-t border-gray-200 bg-gray-50">
-          <button className="w-full text-center text-sm text-teal-600 hover:text-teal-700 font-medium">
-            View All Notifications
-          </button>
-        </div>
-      )}
-    </div>
-  );
-
   const sendMessage = () => {
     if (!newMessage.trim() || !selectedChat) return;
     
@@ -364,7 +138,7 @@ const SerenityConnect = () => {
       }));
     }, 2000);
   };
-
+const navigate = useNavigate();
   const Sidebar = () => (
     <div className="w-64 bg-teal-400 text-white h-screen flex flex-col">
       <div className="bg-teal-500 p-4 text-center">
@@ -396,34 +170,35 @@ const SerenityConnect = () => {
             <span className="text-sm">Dashboard</span>
           </button>
           <button 
-            onClick={() => handleNavigation('patient-report')}
-            className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
-          >
-            <FileText className="w-4 h-4" />
-            <span className="text-sm">Patient Report</span>
-          </button>
+  onClick={() => navigate('/patient-report')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <FileText className="w-4 h-4" />
+  <span className="text-sm">Patient Report</span>
+</button>
 
           <button 
-            onClick={() => handleNavigation('take-home')}
-            className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
-          >
-            <Home className="w-4 h-4" />
-            <span className="text-sm">Take Home</span>
-          </button>
-          <button 
-            onClick={() => handleNavigation('serenity-games')}
-            className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
-          >
-            <Gamepad className="w-4 h-4" />
-            <span className="text-sm">Patient Interactive Games</span>
-          </button>
-          <button 
-            onClick={() => handleNavigation('submission-history')}
-            className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
-          >
-            <FileText className="w-4 h-4" />
-            <span className="text-sm">Submission History</span>
-          </button>
+  onClick={() => navigate('/take-home')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <Home className="w-4 h-4" />
+  <span className="text-sm">Take Home</span>
+</button>
+ <button 
+  onClick={() => navigate('/serenity-games')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <Gamepad className="w-4 h-4" />
+  <span className="text-sm">Patient Interactive Games</span>
+</button>
+<button 
+  onClick={() => navigate('/submission-history')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <FileText className="w-4 h-4" />
+  <span className="text-sm">Submission History</span>
+</button>
+
 
           <button 
             onClick={() => setActiveView('doctors')}
@@ -448,12 +223,12 @@ const SerenityConnect = () => {
             <span className="text-sm">Messages</span>
           </button>
           <button 
-            onClick={() => handleNavigation('personal')}
-            className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
-          >
-            <Settings className="w-4 h-4" />
-            <span className="text-sm">Settings</span>
-          </button>
+  onClick={() => navigate('/personal')}
+  className="w-full flex items-center space-x-3 p-2 rounded text-left hover:bg-teal-500 transition-colors"
+>
+  <Settings className="w-4 h-4" />
+  <span className="text-sm">Settings</span>
+</button>
         </nav>
 
         <p className="text-xs text-teal-100 mt-8 mb-4">REQUESTS</p>
@@ -485,32 +260,21 @@ const SerenityConnect = () => {
           <button className="p-2 text-gray-600 hover:text-gray-800">
             <MessageCircle className="w-6 h-6" />
           </button>
-          <div className="relative">
-            <button 
-              onClick={() => setShowNotifications(!showNotifications)}
-              className="p-2 text-gray-600 hover:text-gray-800 relative"
-            >
-              <Bell className="w-6 h-6" />
-              {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {unreadCount}
-                </span>
-              )}
-            </button>
-            {showNotifications && <NotificationPanel />}
-          </div>
+          <button className="p-2 text-gray-600 hover:text-gray-800">
+            <Bell className="w-6 h-6" />
+          </button>
         </div>
       </div>
 
       <div className="flex space-x-4 mb-8">
         <button 
-          onClick={() => handleNavigation('take-home')}
+          onClick={() => navigate('/take-home')}
           className="bg-teal-400 text-white px-6 py-3 rounded-full font-medium hover:bg-teal-500 transition-colors"
         >
           Take Home
         </button>
         <button 
-          onClick={() => handleNavigation('patient-report')}
+          onClick={() => navigate('/patient-report')}
           className="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-colors"
         >
           Patient Report
@@ -684,6 +448,8 @@ const SerenityConnect = () => {
     </div>
   );
   
+
+
   const ChatView = () => (
     <div className="flex-1 bg-gray-50 flex flex-col">
       <div className="bg-white border-b p-4 flex items-center justify-between">
