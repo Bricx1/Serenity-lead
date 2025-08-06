@@ -25,6 +25,7 @@ import {
   LogOut,
   Home
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Personal = () => {
   const [currentPage, setCurrentPage] = useState('profile');
@@ -42,6 +43,7 @@ const Personal = () => {
   });
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [activeTab, setActiveTab] = useState('faq');
+const navigate = useNavigate();
 
   // Sidebar Navigation
   const Sidebar = () => (
@@ -690,14 +692,16 @@ const Personal = () => {
             Cancel
           </button>
           <button 
-            className="flex-1 py-3 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-            onClick={() => {
-              setShowLogoutModal(false);
-              alert('Logged out successfully!');
-            }}
-          >
-            Logout
-          </button>
+  className="flex-1 py-3 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+  onClick={() => {
+    setShowLogoutModal(false);
+    // Perform actual logout logic here if needed
+    navigate('*/'); // Replace with your actual dashboard route
+  }}
+>
+  Logout
+</button>
+
         </div>
       </div>
     </div>
