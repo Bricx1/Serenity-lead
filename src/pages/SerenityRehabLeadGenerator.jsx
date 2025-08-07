@@ -10,12 +10,12 @@ import {
   Shield,
   Users,
   Clock,
-  
   ArrowRight,
   FileText,
-  
   AlertCircle,
-  
+  ExternalLink,
+  UserPlus,
+  ClipboardList,
 } from 'lucide-react';
 
 // React Router
@@ -46,6 +46,9 @@ const SerenityRehabLeadGenerator = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isVisible, setIsVisible] = useState({});
+
+  // Google Form URL - Replace this with your actual Google Form URL
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc_z1FdpPayXb1Cw48NYHjf39WI0JpPQoLTO1NHbBP295Ct_Q/viewform?usp=header";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -110,6 +113,11 @@ const SerenityRehabLeadGenerator = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
+  // Function to handle Google Form navigation
+  const openGoogleForm = () => {
+    window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-blue-50">
       <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -158,7 +166,6 @@ const SerenityRehabLeadGenerator = () => {
   </div>
 </header>
 
-
       {/* Hero Section with Lead Form */}
       <section className="relative py-20">  
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -206,6 +213,28 @@ const SerenityRehabLeadGenerator = () => {
                   <span className="text-gray-700">24/7 Support</span>
                 </div>
               </div>
+              
+              {/* Google Form Button in Hero Section */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button 
+                  onClick={openGoogleForm}
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold px-8 py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center shadow-lg"
+                >
+                  <UserPlus className="mr-2 h-5 w-5" />
+                  Complete Patient Intake Form
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </button>
+                
+                <button 
+                  onClick={openGoogleForm}
+                  className="bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold px-8 py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center justify-center shadow-lg"
+                >
+                  <ClipboardList className="mr-2 h-5 w-5" />
+                  Medical History Form
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </button>
+              </div>
+
               {/* Video or Image */}
     <div className="mt-6 rounded-xl overflow-hidden shadow-lg">
       <video className="w-full h-auto" controls poster="/path/to/poster-image.jpg">
@@ -257,6 +286,19 @@ const SerenityRehabLeadGenerator = () => {
                     <p className="text-teal-800 font-medium">Crisis Support Available 24/7</p>
                     <p className="text-teal-600">248-838-3686</p>
                   </div>
+                  
+                  {/* Google Form Button in Success State */}
+                  <div className="space-y-3 mb-4">
+                    <button 
+                      onClick={openGoogleForm}
+                      className="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center"
+                    >
+                      <ClipboardList className="mr-2 h-5 w-5" />
+                      Complete Detailed Patient Form
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </button>
+                  </div>
+                  
                   <button 
                     onClick={() => setShowSuccess(false)}
                     className="bg-teal-500 text-white px-6 py-2 rounded-full hover:bg-teal-600 transition-colors"
@@ -375,6 +417,22 @@ const SerenityRehabLeadGenerator = () => {
                         <option value="month">Within a month</option>
                         <option value="planning">Just planning ahead</option>
                       </select>
+                      
+                      {/* Google Form Button in Step 2 */}
+                      <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <p className="text-sm text-blue-800 mb-3">
+                          Need to provide more detailed medical information?
+                        </p>
+                        <button 
+                          onClick={openGoogleForm}
+                          type="button"
+                          className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center text-sm"
+                        >
+                          <FileText className="mr-2 h-4 w-4" />
+                          Open Detailed Medical Form
+                          <ExternalLink className="ml-2 h-3 w-3" />
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -497,6 +555,16 @@ const SerenityRehabLeadGenerator = () => {
                 <li className="flex items-center"><CheckCircle className="h-4 w-4 text-teal-500 mr-2" />Family counseling</li>
                 <li className="flex items-center"><CheckCircle className="h-4 w-4 text-teal-500 mr-2" />Crisis intervention</li>
               </ul>
+              
+              {/* Google Form Button in Service Card */}
+              <button 
+                onClick={openGoogleForm}
+                className="w-full bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors flex items-center justify-center text-sm"
+              >
+                <ClipboardList className="mr-2 h-4 w-4" />
+                Counseling Intake Form
+                <ExternalLink className="ml-2 h-3 w-3" />
+              </button>
             </div>
 
             {/* Methadone Services */}
@@ -512,6 +580,16 @@ const SerenityRehabLeadGenerator = () => {
                 <li className="flex items-center"><CheckCircle className="h-4 w-4 text-blue-500 mr-2" />Dose adjustments</li>
                 <li className="flex items-center"><CheckCircle className="h-4 w-4 text-blue-500 mr-2" />Safety protocols</li>
               </ul>
+              
+              {/* Google Form Button in Service Card */}
+              <button 
+                onClick={openGoogleForm}
+                className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center text-sm"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                MAT Assessment Form
+                <ExternalLink className="ml-2 h-3 w-3" />
+              </button>
             </div>
 
             {/* Support Services */}
@@ -527,6 +605,16 @@ const SerenityRehabLeadGenerator = () => {
                 <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Aftercare planning</li>
                 <li className="flex items-center"><CheckCircle className="h-4 w-4 text-green-500 mr-2" />Recovery education</li>
               </ul>
+              
+              {/* Google Form Button in Service Card */}
+              <button 
+                onClick={openGoogleForm}
+                className="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center text-sm"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Support Services Form
+                <ExternalLink className="ml-2 h-3 w-3" />
+              </button>
             </div>
           </div>
 
