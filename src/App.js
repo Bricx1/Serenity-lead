@@ -17,9 +17,9 @@ import SerenityGames from './Components/SerenityGames';
 import PatientSubmissionHistory from './pages/PatientSubmissionHistory';
 
 
-
 function App() {
   return (
+    
     <Router>
       <Routes>
         {/* Main Site Pages */}
@@ -45,6 +45,10 @@ function App() {
       </Routes>
     </Router>
   );
+  
+  
+
+
 }
 
 export default App;

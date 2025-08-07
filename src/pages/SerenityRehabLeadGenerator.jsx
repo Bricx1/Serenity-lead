@@ -160,7 +160,7 @@ const SerenityRehabLeadGenerator = () => {
 
 
       {/* Hero Section with Lead Form */}
-      <section className="relative py-20">
+      <section className="relative py-20">  
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -168,7 +168,7 @@ const SerenityRehabLeadGenerator = () => {
                 <Shield className="h-4 w-4 mr-2" />
                 Licensed Addiction Treatment Center
               </div>
-              
+
               <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 <span className="text-teal-600">Comprehensive Care</span> and 
                 Counseling to Patients in Need
@@ -206,6 +206,13 @@ const SerenityRehabLeadGenerator = () => {
                   <span className="text-gray-700">24/7 Support</span>
                 </div>
               </div>
+              {/* Video or Image */}
+    <div className="mt-6 rounded-xl overflow-hidden shadow-lg">
+      <video className="w-full h-auto" controls poster="/path/to/poster-image.jpg">
+        <source src="/videos/intro.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
               {/* Emergency Contact */}
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">
