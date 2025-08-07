@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Backend Server
+
+A simple FastAPI backend is included in `backend/main.py`. Install dependencies and run:
+
+```bash
+pip install -r backend/requirements.txt
+uvicorn backend.main:app --reload
+```
+
+The server exposes a `/ping` endpoint returning `{"message": "pong"}`.
+
+
 ## Available Scripts
 
 In the project directory, you can run:
