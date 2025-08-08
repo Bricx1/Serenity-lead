@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -20,7 +20,7 @@ class Lead(BaseModel):
     message: str | None = None
 
 
-@app.post("/api/leads")
+@app.post("/api/leads", status_code=status.HTTP_201_CREATED)
 async def create_lead(lead: Lead):
     """Endpoint to receive lead data."""
-    return {"message": "Lead received", "data": lead.dict()}
+    return {"message": "Lead received", "data": lead.model_dump()}
