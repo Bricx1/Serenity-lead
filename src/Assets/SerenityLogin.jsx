@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, ArrowLeft, User, Lock } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, User, Lock, Mail } from 'lucide-react';
 
 export default function SerenityLogin() {
   const [email, setEmail] = useState('');
@@ -40,7 +40,7 @@ export default function SerenityLogin() {
         <div className="flex flex-col lg:flex-row">
           {/* Left Panel */}
           <div className="lg:w-1/2 bg-gradient-to-br from-teal-500 via-teal-600 to-blue-600 p-8 lg:p-12 text-white relative overflow-hidden">
-            <button className="flex items-center text-white/80 hover:text-white mb-8 transition-colors">
+            <button onClick={() => navigate(-1)} className="flex items-center text-white/80 hover:text-white mb-8 transition-colors">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Back
             </button>
@@ -124,15 +124,18 @@ export default function SerenityLogin() {
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Email Address"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200"
+                      placeholder="Email Address"
+                      required
+                    />
+                    <Mail className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  </div>
                 </div>
 
                 <div>
