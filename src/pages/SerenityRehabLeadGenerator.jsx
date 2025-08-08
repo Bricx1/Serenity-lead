@@ -30,6 +30,8 @@ import {
   FaPaperPlane,
 } from 'react-icons/fa';
 
+import { createLead } from '../api';
+
 const SerenityRehabLeadGenerator = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -77,11 +79,16 @@ const SerenityRehabLeadGenerator = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Lead submitted:', formData);
-    setShowSuccess(true);
-    
+    try {
+      await createLead(formData);
+      console.log('Lead submitted:', formData);
+      setShowSuccess(true);
+    } catch (err) {
+      console.error('Lead submission failed', err);
+    }
+
     // Simulate automated patient communication system
     setTimeout(() => {
       console.log('Automated intake packet sent');
