@@ -77,11 +77,29 @@ const SerenityRehabLeadGenerator = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const apiBase =
+      process.env.NODE_ENV === 'production'
+        ? process.env.REACT_APP_API_BASE
+        : '';
+
+    try {
+      await fetch(`${apiBase}/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.error('Failed to submit lead:', error);
+    }
+
     console.log('Lead submitted:', formData);
     setShowSuccess(true);
-    
+
     // Simulate automated patient communication system
     setTimeout(() => {
       console.log('Automated intake packet sent');
@@ -100,7 +118,7 @@ const SerenityRehabLeadGenerator = () => {
       insuranceType: '',
       urgency: '',
       message: '',
-      consent: false
+      consent: false,
     });
     setCurrentStep(1);
   };
