@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Users, 
-  MessageCircle, 
-  FileText, 
-  Activity, 
-  Calendar, 
-  Heart, 
+  Users,
+  MessageCircle,
+  FileText,
+  Calendar,
   Search,
   Bell,
   Settings,
   Home,
-  Upload,
   Phone,
   Video,
   Send,
@@ -19,14 +16,10 @@ import {
   Image,
   Plus,
   Clock,
-  MapPin,
-  Star,
   Circle,
   Gamepad,
   X,
-  Check,
   AlertCircle,
-  UserCheck,
   Stethoscope,
   TestTube,
   PillBottle
@@ -202,15 +195,6 @@ const SerenityConnect = () => {
 
   const deleteNotification = (notificationId) => {
     setNotifications(prev => prev.filter(notif => notif.id !== notificationId));
-  };
-
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case 'high': return 'border-red-200 bg-red-50';
-      case 'medium': return 'border-yellow-200 bg-yellow-50';
-      case 'low': return 'border-gray-200 bg-gray-50';
-      default: return 'border-gray-200 bg-gray-50';
-    }
   };
 
   const getPriorityDot = (priority) => {

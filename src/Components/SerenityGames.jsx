@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Heart, Star, Circle, Square, Triangle, Flower, Smile, Sun, Moon, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Heart, Star, Circle, Square, Triangle, Flower, Smile, Sparkles } from 'lucide-react';
 
 const SerenityGames = () => {
   const [currentGame, setCurrentGame] = useState('menu');
-  const [score, setScore] = useState(0);
 
   const GameMenu = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 p-6">
@@ -90,14 +89,14 @@ const SerenityGames = () => {
     const [matchedCards, setMatchedCards] = useState([]);
     const [moves, setMoves] = useState(0);
 
-    const symbols = ['🌸', '🌺', '🌻', '🌷', '🌹', '🌿', '🦋', '🌈'];
+    const symbols = useMemo(() => ['🌸', '🌺', '🌻', '🌷', '🌹', '🌿', '🦋', '🌈'], []);
 
     useEffect(() => {
       const shuffledCards = [...symbols, ...symbols]
         .sort(() => Math.random() - 0.5)
         .map((symbol, index) => ({ id: index, symbol, flipped: false }));
       setCards(shuffledCards);
-    }, []);
+    }, [symbols]);
 
     const handleCardClick = (id) => {
       if (flippedCards.length === 2 || matchedCards.includes(id)) return;
@@ -276,7 +275,7 @@ const SerenityGames = () => {
 
   // Color Harmony Game
   const ColorGame = () => {
-    const [colors, setColors] = useState(['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8']);
+    const colors = useMemo(() => ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'], []);
     const [selectedColors, setSelectedColors] = useState([]);
     const [pattern, setPattern] = useState([]);
     const [showPattern, setShowPattern] = useState(true);
@@ -285,9 +284,9 @@ const SerenityGames = () => {
       const newPattern = Array.from({ length: 4 }, () => colors[Math.floor(Math.random() * colors.length)]);
       setPattern(newPattern);
       setSelectedColors([]);
-      
+
       setTimeout(() => setShowPattern(false), 3000);
-    }, []);
+    }, [colors]);
 
     const addColor = (color) => {
       if (selectedColors.length < pattern.length) {
@@ -548,31 +547,31 @@ const SerenityGames = () => {
   const ShapeGame = () => {
     const [targetShape, setTargetShape] = useState(null);
     const [options, setOptions] = useState([]);
-    const [score, setLocalScore] = useState(0);
+    const [score, setScore] = useState(0);
     const [feedback, setFeedback] = useState('');
 
-    const shapes = [
+    const shapes = useMemo(() => [
       { component: Circle, name: 'Circle', color: 'text-blue-500' },
       { component: Square, name: 'Square', color: 'text-red-500' },
       { component: Triangle, name: 'Triangle', color: 'text-green-500' },
       { component: Heart, name: 'Heart', color: 'text-pink-500' },
       { component: Star, name: 'Star', color: 'text-yellow-500' },
-    ];
+    ], []);
 
-    useEffect(() => {
-      generateNewRound();
-    }, []);
-
-    const generateNewRound = () => {
+    const generateNewRound = useCallback(() => {
       const target = shapes[Math.floor(Math.random() * shapes.length)];
       const wrongShapes = shapes.filter(s => s.name !== target.name);
       const randomWrong = wrongShapes.sort(() => Math.random() - 0.5).slice(0, 2);
       const allOptions = [target, ...randomWrong].sort(() => Math.random() - 0.5);
-      
+
       setTargetShape(target);
       setOptions(allOptions);
       setFeedback('');
-    };
+    }, [shapes]);
+
+    useEffect(() => {
+      generateNewRound();
+    }, [generateNewRound]);
 
     const handleChoice = (shape) => {
       if (shape.name === targetShape.name) {
