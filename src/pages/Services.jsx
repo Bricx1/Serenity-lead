@@ -118,24 +118,16 @@ const RecoveryQuest = () => {
   ];
 
   const [currentId, setCurrentId] = useState("party-invite");
-  const [showReflection, setShowReflection] = useState(false);
   const [score, setScore] = useState(0);
 
   const scenario = scenarios.find((s) => s.id === currentId);
 
   const handleChoice = (choice) => {
     setScore(prev => prev + (choice.score || 0));
-    const nextScenario = scenarios.find((s) => s.id === choice.next);
-
-    if (nextScenario?.reflection) {
-      setShowReflection(true);
-    }
-
     setCurrentId(choice.next);
   };
 
   const handleReflectionClose = () => {
-    setShowReflection(false);
     setCurrentId("party-invite");
     setScore(0);
   };
