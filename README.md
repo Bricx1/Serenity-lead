@@ -1,5 +1,31 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Frontend
+
+Install dependencies and start the React development server:
+
+```bash
+npm install
+npm start
+```
+
+The app will be available at `http://localhost:3000`.
+
+## Backend
+
+The repository now includes a minimal FastAPI service located in `backend`.
+
+### Running the backend
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+
+The service provides a simple health check at `GET /api/health`.
+
+
 ## Available Scripts
 
 In the project directory, you can run:
