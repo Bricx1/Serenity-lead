@@ -1,0 +1,12 @@
+services:
+  - type: static
+    name: serenity-lead
+    buildCommand: npm ci && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"
+      - key: CI
+        value: "false"
