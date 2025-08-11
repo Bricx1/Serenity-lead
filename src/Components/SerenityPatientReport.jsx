@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Search, User, Calendar, FileText, Camera, Stethoscope, Settings, BarChart3, Users, HelpCircle, Menu, Bell, UserCircle, ChevronLeft, Play, X, Check, ArrowLeft } from 'lucide-react';
+import { Search, FileText, Camera, BarChart3, Bell, UserCircle, ChevronLeft, Play, X, Check, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 
 const SerenityPatientReport = () => {
-  const [activeSection, setActiveSection] = useState('report');
   const [showSubmissions, setShowSubmissions] = useState(false);
   const navigate = useNavigate();
 
@@ -72,20 +71,6 @@ const SerenityPatientReport = () => {
     }
   ];
 
-  const menuItems = [
-    { icon: BarChart3, label: 'Dashboard', key: 'dashboard' },
-    { icon: Calendar, label: 'Calendar', key: 'calendar' },
-    { icon: FileText, label: 'Take a Report', key: 'report', active: true },
-    { icon: Camera, label: 'Take Video', key: 'video' },
-    { icon: Stethoscope, label: 'Doctors and Nurses', key: 'doctors' }
-  ];
-
-  const othersItems = [
-    { icon: Settings, label: 'Settings', key: 'settings' },
-    { icon: FileText, label: 'Reports', key: 'reports' },
-    { icon: Users, label: 'Accounts', key: 'accounts' },
-    { icon: HelpCircle, label: 'Help', key: 'help' }
-  ];
 
   if (showSubmissions) {
     return (

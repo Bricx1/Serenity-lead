@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Check, Camera, Video, Clock, AlertCircle, ChevronRight, X, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Check, Video, Clock, AlertCircle, ChevronRight, X, RotateCcw } from 'lucide-react';
 
 const TakeHome = () => {
   const [currentStep, setCurrentStep] = useState('scan'); // scan, success, record, recording, submit, history
@@ -7,8 +7,7 @@ const TakeHome = () => {
   const [scanComplete, setScanComplete] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
-  const [submissionStatus, setSubmissionStatus] = useState('pending'); // pending, done
-  const [showHistory, setShowHistory] = useState(false);
+  const submissionStatus = 'pending'; // pending, done
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 

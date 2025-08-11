@@ -4,10 +4,9 @@ import {
   Lock, 
   Bell, 
   Calendar, 
-  TrendingUp, 
-  HelpCircle, 
-  ChevronRight, 
-  Eye, 
+  TrendingUp,
+  HelpCircle,
+  Eye,
   EyeOff,
   Phone,
   Mail,
@@ -22,8 +21,7 @@ import {
   ChevronDown,
   ChevronUp,
   Settings,
-  LogOut,
-  Home
+  LogOut
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
