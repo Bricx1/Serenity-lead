@@ -175,6 +175,7 @@ const SerenityRehabLeadGenerator = () => {
                 <Shield className="h-4 w-4 mr-2" />
                 Licensed Addiction Treatment Center
               </div>
+              
 
               <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 <span className="text-teal-600">Comprehensive Care</span> and 
@@ -237,11 +238,16 @@ const SerenityRehabLeadGenerator = () => {
 
               {/* Video or Image */}
     <div className="mt-6 rounded-xl overflow-hidden shadow-lg">
-      <video className="w-full h-auto" controls poster="/path/to/poster-image.jpg">
-        <source src="/videos/intro.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
+  <video
+    className="w-full h-auto"
+    controls
+    poster="\1.png" // <-- replace with your desired image URL
+  >
+    <source src="/videos/intro.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
+
 
               {/* Emergency Contact */}
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">
