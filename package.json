@@ -2,15 +2,28 @@
   "name": "serenity-admin",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x",
+    "npm": ">=9"
+  },
   "dependencies": {
-    "cra-template-tailwindcss": "4.0.1",
-    "lucide-react": "^0.535.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-icons": "^5.5.0",
     "react-router-dom": "^7.7.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^5.0.3"
+    "react-scripts": "^5.0.1",
+    "react-icons": "^5.5.0",
+    "lucide-react": "^0.535.0",
+    "web-vitals": "^5.0.3",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
