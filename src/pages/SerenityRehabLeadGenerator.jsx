@@ -48,7 +48,7 @@ const SerenityRehabLeadGenerator = () => {
   const [isVisible, setIsVisible] = useState({});
 
   // Google Form URL - Replace this with your actual Google Form URL
-  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc_z1FdpPayXb1Cw48NYHjf39WI0JpPQoLTO1NHbBP295Ct_Q/viewform?usp=header";
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfbECwxl06fOsIvhDnPxK-Fr98ysUeDFwjlODgCK1NpEM4L-Q/viewform?usp=header";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
