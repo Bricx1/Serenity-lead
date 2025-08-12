@@ -11,4 +11,5 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: CORS_ORIGINS
-        value: '["http://localhost:3000","http://localhost:5173"]'
+        value: '["
+serenity-lead-mase2025ai-8394s-projects.vercel.app","http://localhost:5173"]'
