@@ -23,8 +23,9 @@ class Settings(BaseSettings):
             s = v.strip()
             if not s:
                 return []
+            # Try JSON array first
             try:
-                j = json.loads(s)          # JSON array allowed
+                j = json.loads(s)
                 if isinstance(j, list):
                     return [str(x).strip() for x in j if str(x).strip()]
             except Exception:
