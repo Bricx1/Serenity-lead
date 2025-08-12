@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Heart, Star, Circle, Square, Triangle, Flower, Smile, Sun, Moon, Sparkles } from 'lucide-react';
 
 const SerenityGames = () => {
@@ -15,6 +15,9 @@ const SerenityGames = () => {
             <Sparkles className="text-yellow-500" />
           </h1>
           <p className="text-purple-600 text-lg">Relax, play, and heal with these gentle games</p>
+          <div className="mt-2 inline-block bg-white text-purple-700 px-3 py-1 rounded-full shadow">
+            Score: {score}
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -97,7 +100,7 @@ const SerenityGames = () => {
         .sort(() => Math.random() - 0.5)
         .map((symbol, index) => ({ id: index, symbol, flipped: false }));
       setCards(shuffledCards);
-    }, []);
+    }, [symbols]);
 
     const handleCardClick = (id) => {
       if (flippedCards.length === 2 || matchedCards.includes(id)) return;
@@ -280,14 +283,15 @@ const SerenityGames = () => {
     const [selectedColors, setSelectedColors] = useState([]);
     const [pattern, setPattern] = useState([]);
     const [showPattern, setShowPattern] = useState(true);
+    const [theme, setTheme] = useState('light');
 
     useEffect(() => {
       const newPattern = Array.from({ length: 4 }, () => colors[Math.floor(Math.random() * colors.length)]);
       setPattern(newPattern);
       setSelectedColors([]);
-      
+
       setTimeout(() => setShowPattern(false), 3000);
-    }, []);
+    }, [colors]);
 
     const addColor = (color) => {
       if (selectedColors.length < pattern.length) {
@@ -320,7 +324,24 @@ const SerenityGames = () => {
               ← Back to Menu
             </button>
             <h2 className="text-3xl font-bold text-orange-800 mb-2">Color Harmony</h2>
-            <p className="text-orange-600">Remember and recreate the color pattern</p>
+            <div className="flex items-center justify-center gap-2 text-orange-600">
+              <p className="">Remember and recreate the color pattern</p>
+              <button
+                aria-label="Toggle theme"
+                onClick={() => {
+                  const next = theme === 'dark' ? 'light' : 'dark';
+                  setTheme(next);
+                  setColors(prev =>
+                    next === 'dark'
+                      ? ['#0b1020', '#e6e8ff', '#7aa2f7']
+                      : ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8']
+                  );
+                }}
+                className="p-1 rounded-full"
+              >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+            </div>
           </div>
 
           <div className="text-center mb-8">
@@ -548,8 +569,9 @@ const SerenityGames = () => {
   const ShapeGame = () => {
     const [targetShape, setTargetShape] = useState(null);
     const [options, setOptions] = useState([]);
-    const [score, setLocalScore] = useState(0);
+    const [, setLocalScore] = useState(() => Number(localStorage.getItem('serenity_score')) || 0);
     const [feedback, setFeedback] = useState('');
+    const startBtnRef = useRef(null);
 
     const shapes = [
       { component: Circle, name: 'Circle', color: 'text-blue-500' },
@@ -559,24 +581,30 @@ const SerenityGames = () => {
       { component: Star, name: 'Star', color: 'text-yellow-500' },
     ];
 
-    useEffect(() => {
-      generateNewRound();
-    }, []);
-
-    const generateNewRound = () => {
+    const generateNewRound = useCallback(() => {
       const target = shapes[Math.floor(Math.random() * shapes.length)];
       const wrongShapes = shapes.filter(s => s.name !== target.name);
       const randomWrong = wrongShapes.sort(() => Math.random() - 0.5).slice(0, 2);
       const allOptions = [target, ...randomWrong].sort(() => Math.random() - 0.5);
-      
+
       setTargetShape(target);
       setOptions(allOptions);
       setFeedback('');
-    };
+      setTimeout(() => startBtnRef.current?.focus(), 0);
+    }, [shapes]);
+
+    useEffect(() => {
+      generateNewRound();
+    }, [generateNewRound]);
 
     const handleChoice = (shape) => {
       if (shape.name === targetShape.name) {
         setScore(prev => prev + 1);
+        setLocalScore(s => {
+          const next = (s ?? 0) + 1;
+          localStorage.setItem('serenity_score', String(next));
+          return next;
+        });
         setFeedback('Correct! ✨');
         setTimeout(() => {
           generateNewRound();
@@ -599,6 +627,13 @@ const SerenityGames = () => {
             </button>
             <h2 className="text-3xl font-bold text-teal-800 mb-2">Shape Serenity</h2>
             <p className="text-teal-600">Score: {score}</p>
+            <button
+              ref={startBtnRef}
+              onClick={generateNewRound}
+              className="mt-2 px-4 py-2 bg-teal-400 text-white rounded-lg hover:bg-teal-500"
+            >
+              Next
+            </button>
           </div>
 
           {targetShape && (

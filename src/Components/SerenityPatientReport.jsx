@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, User, Calendar, FileText, Camera, Stethoscope, Settings, BarChart3, Users, HelpCircle, Menu, Bell, UserCircle, ChevronLeft, Play, X, Check, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -87,6 +87,13 @@ const SerenityPatientReport = () => {
     { icon: HelpCircle, label: 'Help', key: 'help' }
   ];
 
+  useEffect(() => {
+    if (!activeSection) return;
+    document
+      .getElementById(activeSection)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [activeSection]);
+
   if (showSubmissions) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -164,14 +171,44 @@ const SerenityPatientReport = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-     
-
-      
-      
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+    <>
+      <div className="spr-header flex items-center justify-between px-4 py-2 bg-white border-b">
+        <button aria-label="Menu" onClick={() => setActiveSection(prev => prev || 'overview')}>
+          <Menu size={18} />
+        </button>
+        <div className="spr-title flex items-center gap-2">
+          <User size={18} /> Patient Report
+        </div>
+      </div>
+      <div className="min-h-screen bg-gray-50 flex">
+        <nav className="spr-nav p-4 border-r">
+          {menuItems.map(item => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.key}
+                className={`${activeSection === item.key ? 'font-bold' : ''} block mb-2 flex items-center gap-2`}
+                onClick={() => setActiveSection(item.key)}
+              >
+                <Icon size={16} />
+                {item.label}
+              </button>
+            );
+          })}
+          <ul className="spr-others mt-4 text-sm text-gray-600">
+            {othersItems.map(item => {
+              const Icon = item.icon;
+              return (
+                <li key={item.key} className="flex items-center gap-2">
+                  <Icon size={14} />
+                  {item.label}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-6 py-4">
   {/* Back Arrow at Top Left */}
@@ -288,6 +325,7 @@ const SerenityPatientReport = () => {
         </main>
       </div>
     </div>
+  </>
   );
 };
 
