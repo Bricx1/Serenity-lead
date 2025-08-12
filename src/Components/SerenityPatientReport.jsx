@@ -182,19 +182,29 @@ const SerenityPatientReport = () => {
       </div>
       <div className="min-h-screen bg-gray-50 flex">
         <nav className="spr-nav p-4 border-r">
-          {menuItems.map(item => (
-            <button
-              key={item.key}
-              className={`${activeSection === item.key ? 'font-bold' : ''} block mb-2`}
-              onClick={() => setActiveSection(item.key)}
-            >
-              {item.label}
-            </button>
-          ))}
+          {menuItems.map(item => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.key}
+                className={`${activeSection === item.key ? 'font-bold' : ''} block mb-2 flex items-center gap-2`}
+                onClick={() => setActiveSection(item.key)}
+              >
+                <Icon size={16} />
+                {item.label}
+              </button>
+            );
+          })}
           <ul className="spr-others mt-4 text-sm text-gray-600">
-            {othersItems.map(item => (
-              <li key={item.key}>{item.label}</li>
-            ))}
+            {othersItems.map(item => {
+              const Icon = item.icon;
+              return (
+                <li key={item.key} className="flex items-center gap-2">
+                  <Icon size={14} />
+                  {item.label}
+                </li>
+              );
+            })}
           </ul>
         </nav>
         {/* Main Content */}
