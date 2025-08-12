@@ -147,6 +147,13 @@ const navigate = useNavigate();
 
     return (
       <div className="flex-1 bg-gray-50">
+        <div className="breadcrumbs flex items-center gap-1 px-8 py-2 text-sm text-gray-600">
+          <span role="link" onClick={() => navigate('/')} style={{cursor:'pointer'}}>
+            <Home size={16} />
+          </span>
+          <ChevronRight size={14} />
+          <span>Personal</span>
+        </div>
         {/* Header */}
         <div className="bg-white shadow-sm border-b px-8 py-6">
           <div className="flex items-center justify-between">

@@ -347,6 +347,12 @@ const TakeHome = () => {
               <span className="text-white text-sm">+</span>
             </div>
           </div>
+          <label className="btn-camera inline-flex items-center gap-2 cursor-pointer bg-teal-100 text-teal-700 px-4 py-2 rounded-full mb-4">
+            <Camera size={16} /> Capture/Upload
+            <input type="file" accept="image/*" onChange={(e) => {
+              if (e.target.files?.length) setSubmissionStatus('uploaded');
+            }} hidden />
+          </label>
 
           <button className="w-full bg-teal-400 text-white py-4 rounded-full font-semibold text-lg mb-8 flex items-center justify-center">
             Submit Take Home
@@ -378,7 +384,7 @@ const TakeHome = () => {
         </div>
 
         <div className="space-y-4">
-          <button 
+          <button
             onClick={goToHistory}
             className="w-full flex items-center justify-between p-4 text-left"
           >
@@ -390,6 +396,16 @@ const TakeHome = () => {
             <span className="text-gray-800">Help / How It Works?</span>
             <ChevronRight className="w-5 h-5 text-gray-400" />
           </button>
+        </div>
+        <div className="mt-6 text-center">
+          <button onClick={() => setShowHistory(v => !v)}>
+            {showHistory ? 'Hide' : 'Show'} History
+          </button>
+          {showHistory && (
+            <div className="history-panel text-sm text-gray-600 mt-2">
+              Recent submissions appear here…
+            </div>
+          )}
         </div>
       </div>
     </div>
