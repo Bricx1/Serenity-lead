@@ -36,6 +36,7 @@ const SerenityConnect = () => {
   const [activeView, setActiveView] = useState('home');
   const [selectedChat, setSelectedChat] = useState(null);
   const [newMessage, setNewMessage] = useState('');
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [chatMessages, setChatMessages] = useState({
     1: [
       { id: 1, sender: 'doctor', text: 'ok doc. I will drink lots of water and exercise.', time: '10:15', doctorName: 'Dr. Maria Gonzalez' },
@@ -206,12 +207,20 @@ const SerenityConnect = () => {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'high': return 'border-red-200 bg-red-50';
-      case 'medium': return 'border-yellow-200 bg-yellow-50';
-      case 'low': return 'border-gray-200 bg-gray-50';
-      default: return 'border-gray-200 bg-gray-50';
+      case 'high': return '#ef4444';
+      case 'medium': return '#f59e0b';
+      case 'low': return '#6b7280';
+      default: return '#6b7280';
     }
   };
+
+  const PriorityBadge = ({ level }) => (
+    <span
+      style={{ background: getPriorityColor(level), color: '#fff', padding: '2px 6px', borderRadius: 6 }}
+    >
+      {level}
+    </span>
+  );
 
   const getPriorityDot = (priority) => {
     switch (priority) {
@@ -300,7 +309,9 @@ const SerenityConnect = () => {
                   </p>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">{notification.time}</span>
+                    <span className="text-xs text-gray-500 flex items-center gap-2">
+                      {notification.time} <PriorityBadge level={notification.priority} />
+                    </span>
                     <div className="flex items-center space-x-2">
                       {notification.actionRequired && (
                         <button className="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded-full hover:bg-teal-200 transition-colors">
@@ -310,9 +321,9 @@ const SerenityConnect = () => {
                       {!notification.isRead && (
                         <button
                           onClick={() => markAsRead(notification.id)}
-                          className="text-xs text-teal-600 hover:text-teal-700"
+                          className="text-xs text-teal-600 hover:text-teal-700 flex items-center gap-1"
                         >
-                          Mark as read
+                          <Check className="w-3 h-3" /> Mark as read
                         </button>
                       )}
                     </div>
@@ -334,6 +345,10 @@ const SerenityConnect = () => {
       )}
     </div>
   );
+
+  const onFilePick = (e) => {
+    if (e.target.files?.length) setUploadedFile(e.target.files[0]);
+  };
 
   const sendMessage = () => {
     if (!newMessage.trim() || !selectedChat) return;
@@ -673,11 +688,23 @@ const navigate = useNavigate();
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-bold text-gray-800">{contact.name}</h3>
+                  <h3 className="font-bold text-gray-800 flex items-center">
+                    {contact.name}
+                    <UserCheck className="w-4 h-4 text-teal-500 ml-1" />
+                    <Heart className="w-4 h-4 text-pink-500 ml-1" />
+                  </h3>
                   <span className="text-xs text-gray-500">{contact.time}</span>
                 </div>
-                <p className="text-green-600 text-sm mb-1">{contact.status}</p>
-                <p className="text-gray-600 text-sm">{contact.subtitle}</p>
+                <p className="text-green-600 text-sm mb-1 flex items-center">
+                  <Activity className="w-4 h-4 mr-1" />
+                  {contact.status}
+                  <Check className="w-4 h-4 text-green-500 ml-1" />
+                </p>
+                <p className="text-gray-600 text-sm flex items-center">
+                  <MapPin className="w-4 h-4 mr-1" />
+                  {contact.subtitle}
+                  <Star className="w-4 h-4 text-yellow-400 ml-1" />
+                </p>
               </div>
             </div>
           </button>
@@ -771,6 +798,13 @@ const navigate = useNavigate();
           <button className="p-2 text-gray-600 hover:text-gray-800">
             <FileText className="w-5 h-5" />
           </button>
+          <label className="p-2 text-gray-600 hover:text-gray-800 cursor-pointer">
+            <Upload className="w-5 h-5" />
+            <input type="file" onChange={onFilePick} hidden />
+          </label>
+          {uploadedFile && (
+            <span className="text-xs text-gray-500">{uploadedFile.name}</span>
+          )}
           <div className="flex-1 relative">
             <input
               type="text"

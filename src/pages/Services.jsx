@@ -327,6 +327,7 @@ const Services = () => {
   const [currentPatient, setCurrentPatient] = useState(0);
   const [, setAnimatedStats] = useState({ patients: 0, years: 0, success: 0 });
   const [, setProgressAnimation] = useState(0);
+  const [showReflection, setShowReflection] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -437,6 +438,17 @@ const Services = () => {
           </div>
         </div>
       </header>
+      <div className="p-4">
+        <button onClick={() => setShowReflection(v => !v)}>
+          {showReflection ? 'Hide' : 'Show'} Reflection
+        </button>
+        {showReflection && (
+          <section aria-label="Reflection" className="mt-2">
+            <h3>Reflection</h3>
+            <p>Write a short reflection after each session.</p>
+          </section>
+        )}
+      </div>
 
       {/* Hero Banner with Rotating Gallery */}
       <div className="relative w-full max-w-7xl mx-auto px-4 pt-12">
