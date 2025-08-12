@@ -1,38 +1,34 @@
-from typing import List, Union
+# app/core/config.py
+from typing import Any, List
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field, field_validator
+from pydantic import field_validator
 import json
 
-
 class Settings(BaseSettings):
-    APP_NAME: str = "Lead/Patient API"
-    APP_ENV: str = "development"
-    DATABASE_URL: str = "sqlite:///./dev.db"
-    CORS_ORIGINS: List[str] = Field(default_factory=list)
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=False)
+    CORS_ORIGINS: List[str] = []
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
-    def _parse_cors(cls, v: Union[str, List[str], None]) -> List[str]:
+    def parse_cors(cls, v: Any) -> List[str]:
         if v is None:
             return []
-        if isinstance(v, list):
-            return [s for s in v if isinstance(s, str) and s.strip()]
+        if isinstance(v, (list, tuple, set)):
+            return list(v)
         if isinstance(v, str):
             s = v.strip()
             if not s:
                 return []
-            # Try JSON array first
-            try:
-                j = json.loads(s)
-                if isinstance(j, list):
-                    return [str(x).strip() for x in j if str(x).strip()]
-            except Exception:
-                pass
-            # Fallback: comma-separated list
+            # JSON list?
+            if s.startswith("["):
+                try:
+                    data = json.loads(s)
+                    return [str(x).strip() for x in data if str(x).strip()]
+                except Exception:
+                    pass
+            # Fallback: CSV
             return [part.strip() for part in s.split(",") if part.strip()]
         return []
-
-
+        
 settings = Settings()
